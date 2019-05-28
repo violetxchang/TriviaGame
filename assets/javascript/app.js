@@ -40,7 +40,7 @@ var index = 0;
 
 
 
-
+$('#submitForm').hide();
 
 //  When the start button gets clicked, run the start function.
 //make start button go away
@@ -54,6 +54,11 @@ $("#startClock").on("click", function run() {
     //when 60 seconds is up, stop timer, alert "Time's up!" hide trivia game, show results
     function run() {
 
+        $('.instructions').hide();
+        $('#startButton').hide();
+        $('#results').hide();
+        $('#submitForm').show();
+
 
         clearInterval(intervalId);
         intervalId = setInterval(decrement, 1000);
@@ -63,12 +68,24 @@ $("#startClock").on("click", function run() {
             if (number === 0) {
                 stop();
             }
+
+
             //hide game, show results
             function stop() {
                 clearInterval(intervalId);
                 alert("Time's Up!");
+                $('.instructions').hide();
+                $('#startButton').hide();
+                $('#results').show();
+                $('#submitForm').hide();
+                $('#questionDiv').hide();
+                $('#countdownTimer').hide();
+                $('.lead').hide();
+                $("#results").html("Correct Answers: "+correctAnswers+"<br><br>Incorrect Answers: "+inCorrectAnswers+"<br><br>Unanswered: "+unAnswers);
             }
         }
+
+
 //q1
         var newDiv = $("<div><br>");
         var showQuestions = $("<p>")
@@ -77,7 +94,7 @@ $("#startClock").on("click", function run() {
 
         newDiv = $("<div>");
         showPossibleAnswers = $("<div>")
-        $("#questionDiv").append("<input class='response' type='radio' name='answer1'>" + questionAnswers[0].answers[0] + "&nbsp;&nbsp;&nbsp;&nbsp;");
+        $("#questionDiv").append("<input class='response' type='radio' data-right=" + questionAnswers[0].rightAnswer + " name='answer1'>" + questionAnswers[0].answers[0] + "&nbsp;&nbsp;&nbsp;&nbsp;");
         $("#questionDiv").append("<input class='response' type='radio' name='answer1'>" + questionAnswers[0].answers[1] + "&nbsp;&nbsp;&nbsp;&nbsp;");
         $("#questionDiv").append("<input class='response' type='radio' name='answer1'>" + questionAnswers[0].answers[2] + "&nbsp;&nbsp;&nbsp;&nbsp;<br><br><br>");
 
@@ -132,6 +149,7 @@ $("#startClock").on("click", function run() {
         $("#questionDiv").append("<input class='response' type='radio' name='answer5'>" + questionAnswers[4].answers[0] + "&nbsp;&nbsp;&nbsp;&nbsp;");
         $("#questionDiv").append("<input class='response' type='radio' name='answer5'>" + questionAnswers[4].answers[1] + "&nbsp;&nbsp;&nbsp;&nbsp;");
         $("#questionDiv").append("<input class='response' type='radio' name='answer5'>" + questionAnswers[4].answers[2] + "&nbsp;&nbsp;&nbsp;&nbsp;<br><br><br>");
+
 
         //loop through each trivia question, make each answer into a radio button
         //         function showTrivia(){
