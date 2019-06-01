@@ -1,6 +1,7 @@
 //list of variables
-var questionAnswers = [
-    {
+
+
+var questionAnswers = [{
         question: "How many paintings did Vincent Van Gogh sell in his lifetime?",
         answers: ["1", "3", "7"],
         rightAnswer: "1",
@@ -28,13 +29,15 @@ var questionAnswers = [
 
 ]
 
+
+
 //list variables
 var number = 60;
 var intervalId;
 
 
 var correctAnswers = 0;
-var inCorrectAnswers = 0;
+var incorrectAnswers = 0;
 var unAnswers = 0;
 var index = 0;
 
@@ -44,7 +47,7 @@ $('#submitForm').hide();
 
 //  When the start button gets clicked, run the start function.
 //make start button go away
-//start timer at 180 seconds
+//start timer at 60 seconds
 //show questions
 $("#startClock").on("click", function run() {
     console.log("you clicked me");
@@ -63,6 +66,7 @@ $("#startClock").on("click", function run() {
 
         clearInterval(intervalId);
         intervalId = setInterval(decrement, 1000);
+
         function decrement() {
             number--;
             $("#countdownTimer").html("<h2>" + number + " seconds left</h2>");
@@ -82,28 +86,60 @@ $("#startClock").on("click", function run() {
                 $('#questionDiv').hide();
                 $('#countdownTimer').hide();
                 $('.lead').hide();
-                $("#results").html("Correct Answers: " + correctAnswers + "<br><br>Incorrect Answers: " + inCorrectAnswers + "<br><br>Unanswered: " + unAnswers);
-
-                //if radioBtn+index === questionsAnswers.rightAnswer, then correctAnswers++
+                //if radioBtn+index === questionsAnswers.rightAnswer, then ;correctAnswers++
                 //else, incorrectAnswers++
-                //unanswers = questionAnswers.length - (correctAnswers+incorrectAnswers)
+
+                // for (var i = 0; i < questionAnswers[index].answers.length; i++) {
+                //     console.log(questionsAnswers[index].answers);
+                //     if ($("input[name='radioBtn" + i + "']:checked") === questionAnswers[index].rightAnswer) {
+                //         correctAnswers++
+                //     } else {
+                //         incorrectAnswers++
+                //     }
+                // }
+
+                 unAnswers= questionAnswers.length - correctAnswers - incorrectAnswers;
+
+
+                $("#results").html("Correct Answers: " + correctAnswers + "<br><br>Incorrect Answers: " + incorrectAnswers + "<br><br>Unanswered: " + unAnswers);
+
+
             }
         }
 
 
-    
+
         //loop through each trivia question, make each answer into a radio button
         function showTrivia() {
-            for (index=0; index < questionAnswers.length; index++){            
+            for (index = 0; index < questionAnswers.length; index++) {
                 $("#questionDiv").append(questionAnswers[index].question);
                 for (var i = 0; i < questionAnswers[index].answers.length; i++) {
-                    $("#questionDiv").append("<br><input class='response' type='radio' name='radioBtn"+index+"' value=" + i + ">" + questionAnswers[index].answers[i])
+                    $("#questionDiv").append("<br><input class='response' type='radio' data-rightanswer='" + questionAnswers[index].rightAnswer + "' name='radioBtn" + index + "' value=" + questionAnswers[index].answers[i] + ">" + questionAnswers[index].answers[i]);
                 }
                 $("#questionDiv").append("<br><br>");
             }
 
+            $(".response").on("click", function () {
+
+                if ($(this).attr("data-rightanswer") === $(this).val()) {
+                    correctAnswers++;
+                }
+                else
+                {
+                    incorrectAnswers++;
+                }
+                // if ($("input[name='radioBtn" + i + "']:checked") === questionAnswers[index].rightAnswer) {
+                //             correctAnswers++
+                //         } else {
+                //             incorrectAnswers++
+                //         }
+            })
+
         }
+
+
         showTrivia();
+
 
 
     }
