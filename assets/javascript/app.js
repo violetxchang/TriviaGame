@@ -86,17 +86,6 @@ $("#startClock").on("click", function run() {
                 $('#questionDiv').hide();
                 $('#countdownTimer').hide();
                 $('.lead').hide();
-                //if radioBtn+index === questionsAnswers.rightAnswer, then ;correctAnswers++
-                //else, incorrectAnswers++
-
-                // for (var i = 0; i < questionAnswers[index].answers.length; i++) {
-                //     console.log(questionsAnswers[index].answers);
-                //     if ($("input[name='radioBtn" + i + "']:checked") === questionAnswers[index].rightAnswer) {
-                //         correctAnswers++
-                //     } else {
-                //         incorrectAnswers++
-                //     }
-                // }
 
                  unAnswers= questionAnswers.length - correctAnswers - incorrectAnswers;
 
@@ -128,11 +117,6 @@ $("#startClock").on("click", function run() {
                 {
                     incorrectAnswers++;
                 }
-                // if ($("input[name='radioBtn" + i + "']:checked") === questionAnswers[index].rightAnswer) {
-                //             correctAnswers++
-                //         } else {
-                //             incorrectAnswers++
-                //         }
             })
 
         }
